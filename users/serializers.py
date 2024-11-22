@@ -14,6 +14,10 @@ class UserCreateSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=150)
     password = serializers.CharField()
 
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        return user
+
     def validate_password(self, password):
         if len(password) < 6:
             raise ValidationError("пароль должен содержать минимум 6 значений")
