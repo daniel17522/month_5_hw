@@ -1,0 +1,22 @@
+version: "3"
+services:
+  movie_app:
+    build:
+      context: .
+    command: sh -c "python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8001:8000"
+    depends_on:
+      - movie_app_db
+  movie_app_db:
+    image: "postgres:14"
+    environment:
+      - POSTGRES_DB=movie_app_db
+      - POSTGRES_USER=movie_app_user_db
+      - POSTGRES_PASSWORD=123
+    ports:
+      - "5433:5432"
+    volumes:
+      - "movie-app-data:/var/lib/postgresql/data"
+volumes:
+  web-shop-data:
